@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PBL Presentation | 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+    body { 
+      background-color: #020617; 
+      color: #f8fafc; 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      scroll-behavior: smooth; 
+      margin: 0;
+      padding: 0;
+    }
+    .glass { 
+      background: rgba(255, 255, 255, 0.03); 
+      backdrop-filter: blur(15px); 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+    }
+    .gradient-text { 
+      background: linear-gradient(90deg, #60a5fa, #a855f7); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      background-clip: text;
+    }
+
+    #timerContainer { 
+      background: #ffffff; 
+      color: #020617; 
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); 
+      border: 3px solid #3b82f6; 
+      z-index: 1000; 
+    }
+    @keyframes flicker { 
+      0%, 100% { background-color: #ffffff; } 
+      50% { background-color: #fca5a5; } 
+    }
+    .timer-warning { 
+      animation: flicker 1s infinite; 
+      border: 3px solid #ef4444 !important; 
+      color: #b91c1c !important; 
+    }
+    .timer-stop { 
+      background-color: #991b1b !important; 
+      color: #ffffff !important; 
+      border: 3px solid #f87171 !important; 
+      animation: none; 
+    }
+  </style>
+</head>
+<body onload="startTimer()">
+  <!-- Timer Container -->
+  <div id="timerContainer" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 px-6 md:px-8 py-3 md:py-4 rounded-3xl flex items-center gap-4 transition-all">
+    <i class="fas fa-hourglass-start text-blue-600 text-2xl" id="timerIcon"></i>
+    <span id="displayTime" class="text-3xl md:text-4xl font-black font-mono tracking-tighter">00:00</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 glass border-b border-slate-800/50 px-6 md:px-8 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <div class="bg-white p-1 rounded flex items-center justify-center shadow-md" style="height: 48px; width: 48px;">
+        <img src="mujlogo.jpg" alt="MUJ" class="h-full w-auto object-contain" onerror="this.src='https://via.placeholder.com/50?text=MUJ'" />
+      </div>
+      <div class="flex flex-col text-left">
+        <span class="text-xl font-black text-white leading-none uppercase tracking-tighter">PBL <span class="text-blue-500 italic">2026</span></span>
+        <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dept. of Computer Science &amp; Engineering</span>
+      </div>
+    </div>
+    <div class="hidden md:flex gap-8 text-[11px] uppercase tracking-widest font-bold opacity-70">
+      <a href="#problem" class="hover:text-blue-400 transition">Problem</a>
+      <a href="#methodology" class="hover:text-blue-400 transition">Methodology</a>
+      <a href="#literature" class="hover:text-blue-400 transition">Literature</a>
+      <a href="#results" class="hover:text-blue-400 transition">Results</a>
+      <a href="#team" class="hover:text-blue-400 transition">Team</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-6 pt-44 pb-24 space-y-24">
+    <!-- Hero Section -->
+    <section class="text-center">
+      <div class="inline-block px-4 py-1 border border-slate-800 rounded-full text-slate-500 text-[10px] font-mono mb-6 uppercase tracking-widest">ID: 2427030037</div>
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-8 uppercase leading-tight">
+        <span class="gradient-text">Comparative Study of ML and DL Models on the PIC Database</span>
+      </h1>
+      <p class="text-slate-400 max-w-3xl mx-auto italic text-lg leading-relaxed border-l-2 border-blue-500/30 pl-6 text-left">
+        "Systematic evaluation of ML and DL models for pediatric ICU prediction tasks: ICU mortality, in-hospital mortality, and length of stay."
+      </p>
+    </section>
+
+    <!-- Problem Statement Section -->
+    <section id="problem" class="grid md:grid-cols-2 gap-10 items-stretch">
+      <div class="glass p-8 rounded-[2rem] flex flex-col justify-center border-l-4 border-blue-600">
+        <h2 class="text-3xl font-extrabold mb-5">Problem Statement</h2>
+        <p class="text-slate-400 leading-relaxed text-justify">Pediatric ICU data is heterogeneous, imbalanced, and temporally complex, making reliable outcome prediction difficult. This work compares linear models, tree-based ensembles, and gradient boosting to identify robust, clinically practical performance across mortality and LOS outcomes.</p>
+      </div>
+      <div class="glass p-8 rounded-[2rem] border-r-4 border-purple-500/50">
+        <h3 class="text-purple-400 font-bold text-xs uppercase tracking-widest mb-3">Research Gap / Innovation</h3>
+        <ul class="text-sm text-slate-400 italic leading-7 list-disc ml-4">
+          <li>Unified benchmark across all 3 core PIC outcomes.</li>
+          <li>Direct model family comparison under one preprocessing/evaluation setup.</li>
+          <li>Focus on both discrimination (AUROC) and class-imbalance-aware metrics (AUPRC).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section id="methodology" class="space-y-10">
+      <h2 class="text-4xl font-black text-center uppercase tracking-tight">System <span class="text-blue-500">Methodology</span></h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass p-8 rounded-3xl text-center">
+          <i class="fas fa-database text-blue-500 text-3xl mb-4"></i>
+          <h3 class="font-bold mb-2 uppercase text-xs tracking-widest">Dataset / Input</h3>
+          <p class="text-sm text-slate-400">PIC (MAINCLD) cohort with structured clinical variables for mortality and LOS prediction.</p>
+        </div>
+        <div class="glass p-8 rounded-3xl text-center">
+          <i class="fas fa-microchip text-purple-500 text-3xl mb-4"></i>
+          <h3 class="font-bold mb-2 uppercase text-xs tracking-widest">Model / Architecture</h3>
+          <p class="text-sm text-slate-400">Logistic Regression, Random Forest, and XGBoost compared task-wise.</p>
+        </div>
+        <div class="glass p-8 rounded-3xl text-center border-2 border-green-500/20 bg-green-500/5">
+          <i class="fab fa-python text-green-500 text-3xl mb-4"></i>
+          <h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-green-400">Live Execution</h3>
+          <div class="px-6 py-4 bg-green-600/20 rounded-xl text-[10px] font-mono text-left border border-green-500/30">
+            <div class="font-black text-green-400 mb-2">Sample Inference:</div>
+            <div class="text-green-300 space-y-2">
+              <div class="font-bold">===== ICU Mortality Risk Comparison =====</div>
+              <div>Baseline Mortality Rate: 6.97%</div>
+              <div class="mt-3 font-bold">LOW-RISK ICU ADMISSION</div>
+              <div>True Label: 0</div>
+              <div>Predicted Probability: 0.00%</div>
+              <div class="mt-3 font-bold">MEDIUM-RISK ICU ADMISSION</div>
+              <div>True Label: 0</div>
+              <div>Predicted Probability: 6.85%</div>
+              <div class="mt-3 font-bold">HIGH-RISK ICU ADMISSION</div>
+              <div>True Label: 1</div>
+              <div>Predicted Probability: 99.02%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Literature Review Section -->
+    <section id="literature" class="space-y-8">
+      <h2 class="text-4xl font-black text-center uppercase tracking-tight">Literature <span class="text-blue-500">Review</span></h2>
+      <div class="space-y-6 max-w-4xl mx-auto">
+        <article class="glass rounded-3xl p-6 border-t-4 border-blue-500/60">
+          <h3 class="font-bold text-blue-400 uppercase text-xs tracking-widest mb-3">Literature Images</h3>
+          <img src="pbl-2.png" alt="Literature review image 1" class="rounded-xl w-full border border-slate-700/60" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="hidden rounded-xl border border-slate-700/60 min-h-[220px] items-center justify-center bg-slate-900/50">
+            <span class="text-slate-500 text-sm">Image not available</span>
+          </div>
+        </article>
+        <article class="glass rounded-3xl p-6 border-t-4 border-purple-500/60">
+          <h3 class="font-bold text-purple-400 uppercase text-xs tracking-widest mb-3">Additional Literature</h3>
+          <img src="pbl2-2.png" alt="Literature review image 2" class="rounded-xl w-full border border-slate-700/60" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="hidden rounded-xl border border-slate-700/60 min-h-[220px] items-center justify-center bg-slate-900/50">
+            <span class="text-slate-500 text-sm">Image not available</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="glass p-8 md:p-12 rounded-[2.5rem] border-t-4 border-blue-500 space-y-10">
+      <h2 class="text-3xl font-black text-center uppercase tracking-tight">Final Results <span class="text-blue-500">(ML-MODELS)</span></h2>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="p-5 rounded-2xl bg-blue-500/10 border border-blue-400/30">
+          <p class="text-[11px] uppercase tracking-widest text-slate-300 font-bold">ICU Mortality</p>
+          <p class="text-3xl font-black text-blue-300 mt-2">AUROC 0.951</p>
+          <p class="text-xs text-slate-300 mt-2">• AUPRC 0.548<br />• Best: XGBoost<br />• Average Precision = 0.545<br />• Baseline precision = 0.07<br />This indicates the model is generalizing well along with low gap in train and test ROC AUC of 0.048 (~5%).</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-purple-500/10 border border-purple-400/30">
+          <p class="text-[11px] uppercase tracking-widest text-slate-300 font-bold">In-Hospital Mortality</p>
+          <p class="text-3xl font-black text-purple-300 mt-2">AUROC 0.95</p>
+          <p class="text-xs text-slate-300 mt-2">• Best: XGBoost<br />• Similar trend to ICU task</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-cyan-500/10 border border-cyan-400/30">
+          <p class="text-[11px] uppercase tracking-widest text-slate-300 font-bold">Length of Stay (LOS)</p>
+          <p class="text-3xl font-black text-cyan-300 mt-2">R² 0.897</p>
+          <p class="text-xs text-slate-300 mt-2">• MAE 0.231<br />• RMSE 0.354<br />• Best: XGBoost</p>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+        <article class="glass rounded-3xl p-6 space-y-4">
+          <h3 class="text-sm uppercase tracking-widest font-bold text-blue-300">Task 1 — ICU Mortality (label_icu_mortality)</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="text-slate-400 border-b border-slate-700">
+                  <th class="text-left py-2">Model</th>
+                  <th class="text-left py-2">AUROC ↑</th>
+                  <th class="text-left py-2">AUPRC ↑</th>
+                  <th class="text-left py-2">Notes</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-200">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2">Logistic Regression</td>
+                  <td>0.913</td>
+                  <td>0.400</td>
+                  <td>Strong linear baseline</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2">Random Forest</td>
+                  <td>0.926</td>
+                  <td>0.434</td>
+                  <td>Captures nonlinearity</td>
+                </tr>
+                <tr>
+                  <td class="py-2 font-bold text-blue-300">XGBoost</td>
+                  <td class="font-bold text-blue-300">0.951</td>
+                  <td class="font-bold text-blue-300">0.548</td>
+                  <td class="font-bold text-blue-300">ML ceiling (best)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ul class="text-xs text-slate-300 space-y-1 list-disc ml-4">
+            <li>AUROC &gt; 0.95 indicates state-of-the-art ML-level ICU mortality performance.</li>
+            <li>AUPRC ≈ 0.55 is strong under class imbalance.</li>
+            <li>Monotonic improvement suggests no obvious leakage.</li>
+          </ul>
+        </article>
+
+        <article class="glass rounded-3xl p-6 space-y-4">
+          <h3 class="text-sm uppercase tracking-widest font-bold text-purple-300">Task 2 — In-Hospital Mortality (label_in_hospital_mortality)</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="text-slate-400 border-b border-slate-700">
+                  <th class="text-left py-2">Model</th>
+                  <th class="text-left py-2">AUROC ↑</th>
+                  <th class="text-left py-2">AUPRC ↑</th>
+                  <th class="text-left py-2">Notes</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-200">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2">Logistic Regression</td>
+                  <td>~0.90+</td>
+                  <td>Moderate</td>
+                  <td>Similar difficulty</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2">Random Forest</td>
+                  <td>~0.92+</td>
+                  <td>Improved</td>
+                  <td>Nonlinear gains</td>
+                </tr>
+                <tr>
+                  <td class="py-2 font-bold text-purple-300">XGBoost</td>
+                  <td class="font-bold text-purple-300">~0.94–0.95</td>
+                  <td class="font-bold text-purple-300">Best</td>
+                  <td class="font-bold text-purple-300">Consistent with ICU mortality</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-300">Behavior matches ICU mortality but appears slightly noisier, while preserving the same model ranking.</p>
+        </article>
+      </div>
+
+      <article class="glass rounded-3xl p-6 space-y-4">
+        <h3 class="text-sm uppercase tracking-widest font-bold text-cyan-300">Task 3 — Length of Stay Regression (log(LOS + 1))</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-slate-400 border-b border-slate-700">
+                <th class="text-left py-2">Model</th>
+                <th class="text-left py-2">MAE ↓</th>
+                <th class="text-left py-2">RMSE ↓</th>
+                <th class="text-left py-2">R² ↑</th>
+                <th class="text-left py-2">Notes</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-200">
+              <tr class="border-b border-slate-800">
+                <td class="py-2">ElasticNet</td>
+                <td>0.373</td>
+                <td>0.500</td>
+                <td>0.795</td>
+                <td>Linear lower bound</td>
+              </tr>
+              <tr class="border-b border-slate-800">
+                <td class="py-2">Random Forest</td>
+                <td>0.271</td>
+                <td>0.400</td>
+                <td>0.869</td>
+                <td>Strong nonlinear model</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-bold text-cyan-300">XGBoost</td>
+                <td class="font-bold text-cyan-300">0.231</td>
+                <td class="font-bold text-cyan-300">0.354</td>
+                <td class="font-bold text-cyan-300">0.897</td>
+                <td class="font-bold text-cyan-300">ML ceiling (best)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="text-xs text-slate-300 space-y-1 list-disc ml-4">
+          <li>MAE ≈ 0.23 in log-space corresponds to roughly ±25–30% LOS error.</li>
+          <li>R² close to 0.90 is excellent and still realistic for LOS.</li>
+          <li>LOS remains harder than mortality, which is expected clinically.</li>
+        </ul>
+      </article>
+
+      <div class="h-80">
+        <canvas id="resultsChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="text-center pt-8 border-t border-slate-900">
+      <h2 class="text-[10px] font-black text-slate-600 uppercase tracking-[0.5em] mb-12">Academic Credits</h2>
+      <div class="flex flex-wrap justify-center gap-10">
+        <div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-blue-600">
+          <p class="text-[9px] font-bold text-blue-500 mb-2 uppercase tracking-widest">Project Guide</p>
+          <p class="font-black text-xl text-slate-100">Dr. Akshay Jadhav</p>
+        </div>
+        <div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-purple-600">
+          <p class="text-[9px] font-bold text-purple-400 mb-2 uppercase tracking-widest">Student</p>
+          <p class="font-black text-xl text-slate-100">Divyanshu Patel</p>
+          <p class="text-[10px] text-slate-300 mt-1">2427030037</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-10 text-center bg-black/40 border-t border-slate-900">
+    <p class="text-slate-600 text-[10px] font-bold tracking-[0.3em] uppercase mb-2">Manipal University Jaipur</p>
+    <p class="text-slate-500 text-[9px] font-medium tracking-[0.2em] uppercase opacity-50">Department of Computer Science &amp; Engineering • 2026</p>
+  </footer>
+
+  <script>
+    let sec = 0;
+    let timer = null;
+    
+    function startTimer() {
+      timer = setInterval(() => {
+        sec++;
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        document.getElementById('displayTime').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        
+        if (sec >= 480 && sec < 600) {
+          document.getElementById('timerContainer').classList.add('timer-warning');
+          document.getElementById('timerIcon').classList.remove('fa-hourglass-start');
+          document.getElementById('timerIcon').classList.add('fa-hourglass-half');
+        } else if (sec >= 600) {
+          clearInterval(timer);
+          document.getElementById('timerContainer').classList.remove('timer-warning');
+          document.getElementById('timerContainer').classList.add('timer-stop');
+          document.getElementById('displayTime').innerText = '10:00';
+          document.getElementById('timerIcon').classList.remove('fa-hourglass-half');
+          document.getElementById('timerIcon').classList.add('fa-hourglass-end');
+        }
+      }, 1000);
+    }
+
+    // Chart initialization - wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      const ctx = document.getElementById('resultsChart');
+      if (ctx) {
+        new Chart(ctx.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: ['ICU Mortality (AUROC)', 'In-Hospital Mortality (AUROC)', 'LOS (R²)'],
+            datasets: [{
+              label: 'Best Outcome Score',
+              data: [0.951, 0.945, 0.897],
+              backgroundColor: ['#3b82f6', '#a855f7', '#06b6d4'],
+              borderRadius: 14,
+              barThickness: 54
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+              legend: { 
+                labels: { color: '#cbd5e1' } 
+              } 
+            },
+            scales: {
+              y: {
+                min: 0.7,
+                max: 1.0,
+                grid: { color: '#ffffff10' },
+                ticks: { color: '#cbd5e1' }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { color: '#cbd5e1' }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
