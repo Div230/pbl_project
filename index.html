@@ -200,6 +200,9 @@
                   <th class="text-left py-2">Model</th>
                   <th class="text-left py-2">AUROC ↑</th>
                   <th class="text-left py-2">AUPRC ↑</th>
+                  <th class="text-left py-2">Accuracy</th>
+                  <th class="text-left py-2">Recall</th>
+                  <th class="text-left py-2">Precision</th>
                   <th class="text-left py-2">Notes</th>
                 </tr>
               </thead>
@@ -208,19 +211,55 @@
                   <td class="py-2">Logistic Regression</td>
                   <td>0.913</td>
                   <td>0.400</td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td>—</td>
                   <td>Strong linear baseline</td>
                 </tr>
                 <tr class="border-b border-slate-800">
                   <td class="py-2">Random Forest</td>
                   <td>0.926</td>
                   <td>0.434</td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td>—</td>
                   <td>Captures nonlinearity</td>
                 </tr>
-                <tr>
+                <tr class="border-b border-slate-800">
                   <td class="py-2 font-bold text-blue-300">XGBoost</td>
                   <td class="font-bold text-blue-300">0.951</td>
                   <td class="font-bold text-blue-300">0.548</td>
+                  <td class="font-bold text-blue-300">—</td>
+                  <td class="font-bold text-blue-300">—</td>
+                  <td class="font-bold text-blue-300">—</td>
                   <td class="font-bold text-blue-300">ML ceiling (best)</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2">MLP (F1 Optimized)</td>
+                  <td>0.893</td>
+                  <td>—</td>
+                  <td>0.908</td>
+                  <td>0.679</td>
+                  <td>0.397</td>
+                  <td>DL baseline, F1-focused</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2">TabNet</td>
+                  <td>0.667</td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td>0.228</td>
+                  <td>0.186</td>
+                  <td>Attention-based, underperformed</td>
+                </tr>
+                <tr>
+                  <td class="py-2">ResMLP</td>
+                  <td>0.919</td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td>0.736</td>
+                  <td>0.379</td>
+                  <td>Residual MLP, strong recall</td>
                 </tr>
               </tbody>
             </table>
@@ -229,6 +268,8 @@
             <li>AUROC &gt; 0.95 indicates state-of-the-art ML-level ICU mortality performance.</li>
             <li>AUPRC ≈ 0.55 is strong under class imbalance.</li>
             <li>Monotonic improvement suggests no obvious leakage.</li>
+            <li>DL models (MLP, ResMLP) show competitive performance; TabNet significantly underperformed.</li>
+            <li>ResMLP achieved highest recall (0.736) among DL models, useful for high-sensitivity scenarios.</li>
           </ul>
         </article>
 
@@ -376,13 +417,13 @@
         new Chart(ctx.getContext('2d'), {
           type: 'bar',
           data: {
-            labels: ['ICU Mortality (AUROC)', 'In-Hospital Mortality (AUROC)', 'LOS (R²)'],
+            labels: ['Logistic Reg', 'Random Forest', 'XGBoost', 'MLP (F1)', 'TabNet', 'ResMLP'],
             datasets: [{
-              label: 'Best Outcome Score',
-              data: [0.951, 0.945, 0.897],
-              backgroundColor: ['#3b82f6', '#a855f7', '#06b6d4'],
-              borderRadius: 14,
-              barThickness: 54
+              label: 'ICU Mortality AUROC',
+              data: [0.913, 0.926, 0.951, 0.893, 0.667, 0.919],
+              backgroundColor: ['#60a5fa', '#818cf8', '#3b82f6', '#f472b6', '#fb923c', '#a78bfa'],
+              borderRadius: 10,
+              barThickness: 40
             }]
           },
           options: {
@@ -390,19 +431,30 @@
             maintainAspectRatio: false,
             plugins: { 
               legend: { 
-                labels: { color: '#cbd5e1' } 
-              } 
+                labels: { color: '#cbd5e1', font: { size: 12 } } 
+              },
+              title: {
+                display: true,
+                text: 'ICU Mortality: Model Performance Comparison',
+                color: '#cbd5e1',
+                font: { size: 16, weight: 'bold' }
+              }
             },
             scales: {
               y: {
-                min: 0.7,
+                min: 0.6,
                 max: 1.0,
                 grid: { color: '#ffffff10' },
-                ticks: { color: '#cbd5e1' }
+                ticks: { color: '#cbd5e1' },
+                title: {
+                  display: true,
+                  text: 'AUROC Score',
+                  color: '#cbd5e1'
+                }
               },
               x: {
                 grid: { display: false },
-                ticks: { color: '#cbd5e1' }
+                ticks: { color: '#cbd5e1', font: { size: 10 } }
               }
             }
           }
